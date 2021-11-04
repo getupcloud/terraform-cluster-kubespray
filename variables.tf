@@ -1,0 +1,57 @@
+variable "name" {
+  description = "Cluster name"
+  type        = string
+}
+
+#variable "git_repo" {
+#  description = "Kubespray git repository"
+#  type        = string
+#  default     = "https://github.com/kubernetes-sigs/kubespray.git"
+#}
+
+#variable "git_branch" {
+#  description = "Kubespray branch name"
+#  type        = string
+#  default     = "release-2.17"
+#}
+
+variable "kubeconfig_filename" {
+  description = "Kubeconfig path"
+  default     = "~/.kube/config"
+  type        = string
+}
+
+variable "get_kubeconfig_command" {
+  description = "Command to create/update kubeconfig"
+  default     = "true"
+}
+
+variable "flux_git_repo" {
+  description = "GitRepository URL."
+  type        = string
+  default     = ""
+}
+
+variable "flux_wait" {
+  description = "Wait for all manifests to apply"
+  type        = bool
+  default     = true
+}
+
+variable "manifests_path" {
+  description = "Manifests dir inside GitRepository"
+  type        = string
+  default     = ""
+}
+
+variable "cronitor_api_key" {
+  description = "Wait for all manifests to apply"
+  type        = string
+  default     = null
+}
+
+variable "cronitor_pagerduty_key" {
+  description = "Wait for all manifests to apply"
+  type        = string
+  default     = null
+}
