@@ -3,17 +3,11 @@ variable "name" {
   type        = string
 }
 
-#variable "git_repo" {
-#  description = "Kubespray git repository"
-#  type        = string
-#  default     = "https://github.com/kubernetes-sigs/kubespray.git"
-#}
-
-#variable "git_branch" {
-#  description = "Kubespray branch name"
-#  type        = string
-#  default     = "release-2.17"
-#}
+variable "kubespray_git_ref" {
+  description = "Kubespray ref name"
+  type        = string
+  default     = "release-2.17"
+}
 
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
