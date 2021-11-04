@@ -10,13 +10,11 @@ locals {
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
     } >/dev/null
-    cat <<EOJ
-    {
-      "hash": "$hash",
-      "ref": "$KUBESPRAY_GIT_REF",
-      "branch": "$branch"
-    }
-    EOJ
+    echo "{
+      \"hash\": \"$hash\",
+      \"ref\": \"$KUBESPRAY_GIT_REF\",
+      \"branch\": \"$branch\"
+    }"
   EOF
 
   git_state = <<EOF
@@ -25,20 +23,17 @@ locals {
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
     } >/dev/null
-    cat <<EOJ
-    {
-      "hash": "$hash",
-      "ref": "$KUBESPRAY_GIT_REF",
-      "branch": "$branch"
-    }
-    EOJ
+    echo "{
+      \"hash\": \"$hash\",
+      \"ref\": \"$KUBESPRAY_GIT_REF\",
+      \"branch\": \"$branch\"
+    }"
   EOF
 
   git_reset = <<EOF
-    (
-      cd ${path.module}/kubespray
-      git switch -c master
-      git reset --hard
-    )
+    cd ${path.module}/kubespray
+    git switch -c master
+    git reset --hard
+    echo {}
   EOF
 }
