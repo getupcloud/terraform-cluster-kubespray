@@ -6,7 +6,7 @@ locals {
   git_checkout = <<EOF
     {
       cd ${path.module}/kubespray
-      git checkout -b $KUBESPRAY_GIT_REF
+      git checkout -b $KUBESPRAY_GIT_REF $KUBESPRAY_GIT_REF
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
     } >/dev/null
