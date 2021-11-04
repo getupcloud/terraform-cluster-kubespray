@@ -39,13 +39,19 @@ variable "manifests_path" {
 }
 
 variable "cronitor_api_key" {
-  description = "Wait for all manifests to apply"
+  description = "Cronitor API key. Leave empty to destroy"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "cronitor_pagerduty_key" {
-  description = "Wait for all manifests to apply"
+  description = "Cronitor PagerDuty key"
   type        = string
-  default     = null
+  default     = ""
+}
+
+variable "cronitor_tags" {
+  description = "Monitor tags (Informative only)"
+  type        = list(string)
+  default     = []
 }
