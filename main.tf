@@ -16,7 +16,7 @@ resource "shell_script" "kubespray-repo" {
   }
 
   lifecycle_commands {
-    create = local.git_checkout
+    create = local.git_setup
     update = local.git_checkout
     read   = local.git_state
     delete = local.git_reset

@@ -3,13 +3,16 @@ locals {
   suffix     = random_string.suffix.result
   secret     = random_string.secret.result
 
-  git_checkout = <<EOF
+  git_setup = <<EOF
     {
       cd ${path.module}/kubespray
       git checkout -b "$KUBESPRAY_GIT_REF" "$KUBESPRAY_GIT_REF"
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
     } >/dev/null
+
+    pip3 install --user -r requirements.txt >&2
+
     echo "{
       \"hash\": \"$hash\",
       \"ref\": \"$KUBESPRAY_GIT_REF\",
@@ -23,6 +26,7 @@ locals {
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
     } >/dev/null
+
     echo "{
       \"hash\": \"$hash\",
       \"ref\": \"$KUBESPRAY_GIT_REF\",
