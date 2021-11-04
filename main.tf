@@ -11,6 +11,10 @@ module "internet" {
 #}
 
 resource "shell_script" "kubespray-repo" {
+  triggers = {
+    ref = var.kubespray_git_ref
+  }
+
   lifecycle_commands {
     create = local.git_checkout
     update = local.git_checkout
