@@ -25,7 +25,7 @@ locals {
   git_reset = <<EOF
     (
       cd ${path.module}/kubespray
-      git switch -c main
+      git switch -c master
       git reset --hard
     )
   EOF
