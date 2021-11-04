@@ -6,7 +6,7 @@ variable "name" {
 variable "kubespray_git_ref" {
   description = "Kubespray ref name"
   type        = string
-  default     = "release-2.17"
+  default     = "remotes/origin/release-2.17"
 }
 
 variable "kubeconfig_filename" {
