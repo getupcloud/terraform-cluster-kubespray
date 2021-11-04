@@ -4,21 +4,21 @@ locals {
   secret     = random_string.secret.result
 
   git_checkout = <<EOF
-    (
+    {
       cd ${path.module}/kubespray
       git checkout -b $KUBESPRAY_GIT_REF
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
-    ) >/dev/null
+    } >/dev/null
     echo "{\"hash\":\"$hash\",\"branch\":\"$branch\"}"
   EOF
 
   git_state = <<EOF
-    (
+    {
       cd ${path.module}/kubespray
       hash=$(git log -1 --pretty=format:%h)
       branch=$(git rev-parse --abbrev-ref HEAD)
-    ) >/dev/null
+    } >/dev/null
     echo "{\"hash\":\"$hash\",\"branch\":\"$branch\"}"
   EOF
 
