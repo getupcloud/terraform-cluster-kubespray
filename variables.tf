@@ -3,6 +3,11 @@ variable "name" {
   type        = string
 }
 
+variable "customer_name" {
+  description = "Customer name"
+  type        = string
+}
+
 variable "kubespray_git_ref" {
   description = "Kubespray ref name"
   type        = string
@@ -38,6 +43,12 @@ variable "manifests_path" {
   default     = ""
 }
 
+variable "api_endpoint" {
+  description = "Kubernetes API endpoint"
+  type        = string
+  default     = ""
+}
+
 variable "cronitor_api_key" {
   description = "Cronitor API key. Leave empty to destroy"
   type        = string
@@ -48,10 +59,4 @@ variable "cronitor_pagerduty_key" {
   description = "Cronitor PagerDuty key"
   type        = string
   default     = ""
-}
-
-variable "cronitor_tags" {
-  description = "Monitor tags (Informative only)"
-  type        = list(string)
-  default     = []
 }
