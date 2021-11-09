@@ -41,3 +41,12 @@ resource "shell_script" "kubespray-repo" {
     KUBESPRAY_GIT_REF = var.kubespray_git_ref
   }
 }
+
+module "provisioner" {
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=main"
+
+  masters         = var.masters
+  workers         = var.workers
+  ssh_user        = var.ssh_user
+  ssh_private_key = var.ssh_private_key
+}
