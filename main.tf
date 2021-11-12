@@ -17,7 +17,7 @@ module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
 
   cluster_name  = var.name
-  customer_name = var.customer_name
+  customer_name = var.customer
   suffix        = "ksp"
   tags          = [var.kubespray_git_ref]
   pagerduty_key = var.cronitor_pagerduty_key
