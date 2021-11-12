@@ -8,7 +8,7 @@ module "flux" {
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/kubespray/manifests"
   wait           = var.flux_wait
-  cluster_template_vars = {
+  manifests_template_vars = {
     cronitor_id : module.cronitor.cronitor_id
   }
 }
