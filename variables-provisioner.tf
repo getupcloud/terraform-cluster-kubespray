@@ -139,3 +139,13 @@ variable "uninstall_packages" {
     "ntpd"
   ]
 }
+
+variable "etc_hosts" {
+  description = "Entries to add to /etc/hosts on each node"
+  type        = list(object({
+    address   = string
+    hostnames = list(string)
+  }))
+
+  default = []
+}
