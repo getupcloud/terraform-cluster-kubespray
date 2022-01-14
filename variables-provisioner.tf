@@ -22,6 +22,12 @@ variable "kubespray_dir" {
   default     = "/usr/share/kubespray"
 }
 
+variable "inventory_file" {
+  description = "Kubespray inventory file"
+  type        = string
+  default     = "/cluster/hosts.yaml"
+}
+
 variable "masters" {
   description = "List of master nodes to provision"
   type        = list(any)

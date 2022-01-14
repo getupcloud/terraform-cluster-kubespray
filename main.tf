@@ -27,26 +27,6 @@ module "cronitor" {
   api_endpoint  = var.api_endpoint
 }
 
-resource "shell_script" "kubespray-repo" {
-  triggers = {
-    ref = var.kubespray_git_ref
-  }
-
-  lifecycle_commands {
-    create = local.git_setup
-    update = local.git_setup
-    read   = local.git_state
-    delete = local.git_reset
-  }
-
-  environment = {
-    KUBESPRAY_GIT_REPO = var.kubespray_git_repo
-    KUBESPRAY_GIT_REF  = var.kubespray_git_ref
-    KUBESPRAY_DIR      = var.kubespray_dir
-    GIT_DIR            = "${var.kubespray_dir}/.git"
-  }
-}
-
 module "provisioner" {
   source = "github.com/getupcloud/terraform-module-provisioner?ref=main"
 
@@ -56,3 +36,49 @@ module "provisioner" {
   ssh_private_key = var.ssh_private_key
   etc_hosts       = var.etc_hosts
 }
+
+resource "shell_script" "kubespray-repo" {
+  triggers = {
+    ref = var.kubespray_git_ref
+  }
+
+  lifecycle_commands {
+    create = "${path.module}/kubespray-repo-setup.sh create"
+    update = "${path.module}/kubespray-repo-setup.sh update"
+    read   = "${path.module}/kubespray-repo-setup.sh read"
+    delete = "${path.module}/kubespray-repo-setup.sh delete"
+  }
+
+  environment = {
+    KUBESPRAY_GIT_REPO = var.kubespray_git_repo
+    KUBESPRAY_GIT_REF  = var.kubespray_git_ref
+    KUBESPRAY_DIR      = var.kubespray_dir
+    GIT_DIR            = "${var.kubespray_dir}/.git"
+    INVENTORY_FILE     = var.inventory_file
+    MASTERS            = base64encode(jsonencode(var.masters))
+    WORKERS            = base64encode(jsonencode(var.workers))
+  }
+}
+
+resource "shell_script" "kubespray-inventory" {
+  depends_on = [shell_script.kubespray-repo]
+
+  lifecycle_commands {
+    create = "${path.module}/kubespray-inventory-setup.sh create"
+    update = "${path.module}/kubespray-inventory-setup.sh update"
+    read   = "${path.module}/kubespray-inventory-setup.sh read"
+    delete = "${path.module}/kubespray-inventory-setup.sh delete"
+  }
+
+  environment = {
+    KUBESPRAY_GIT_REPO = var.kubespray_git_repo
+    KUBESPRAY_GIT_REF  = var.kubespray_git_ref
+    KUBESPRAY_DIR      = var.kubespray_dir
+    GIT_DIR            = "${var.kubespray_dir}/.git"
+    INVENTORY_FILE     = var.inventory_file
+    MASTERS            = base64encode(jsonencode(var.masters))
+    WORKERS            = base64encode(jsonencode(var.workers))
+  }
+}
+
+
