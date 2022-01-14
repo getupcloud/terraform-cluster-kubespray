@@ -25,7 +25,7 @@ function create_inventory_file()
     $(jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<${WORKERS_JSON})
   )
 
-  $KUBESPRAY/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
+  $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 }
 
 function copy_group_vars()
