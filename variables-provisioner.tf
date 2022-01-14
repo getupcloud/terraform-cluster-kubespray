@@ -4,6 +4,12 @@ variable "deploy_components" {
   default     = false
 }
 
+variable "kubespray_git_repo" {
+  description = "Kubespray git repository"
+  type        = string
+  default     = "https://github.com/kubernetes-sigs/kubespray.git"
+}
+
 variable "kubespray_git_ref" {
   description = "Kubespray ref name"
   type        = string
@@ -11,9 +17,9 @@ variable "kubespray_git_ref" {
 }
 
 variable "kubespray_dir" {
-  description = "Kubespray target dir"
+  description = "Kubespray install dir"
   type        = string
-  default     = "/cluster/kubespray"
+  default     = "/usr/share/kubespray"
 }
 
 variable "masters" {
