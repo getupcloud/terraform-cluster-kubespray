@@ -29,7 +29,7 @@ function command_create()
     exit 1
   fi
 
-  pip3 install --user -r $KUBESPRAY_DIR/kubespray/requirements.txt >&2
+  pip3 install --user -r $KUBESPRAY_DIR/requirements.txt >&2
 
   command_read
 }
