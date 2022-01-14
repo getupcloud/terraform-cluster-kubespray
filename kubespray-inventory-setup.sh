@@ -21,8 +21,8 @@ function create_inventory_file()
   fi
 
   local nodes=(
-    jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<$MASTERS_JSON
-    jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<$WORKERS_JSON
+    jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<${MASTERS_JSON:-{}}
+    jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<${WORKERS_JSON:-{}}
   )
 
   $KUBESPRAY/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
