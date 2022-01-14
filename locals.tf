@@ -5,25 +5,17 @@ locals {
 
   git_setup = <<EOF
     {
-      if [ -d ${var.kubespray_dir} ]; then
-        cd ${var.kubespray_dir}
-        git fetch origin
-      else
-        git clone ${path.module}/kubespray ${var.kubespray_dir}
-        cd ${var.kubespray_dir}
-      fi
-
-      branch=$(git rev-parse --abbrev-ref HEAD)
+      branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
 
       if [ "$branch" != "$KUBESPRAY_GIT_REF" ]; then
-        git checkout -b "$KUBESPRAY_GIT_REF" "$KUBESPRAY_GIT_REF"
+        git switch -c "$KUBESPRAY_GIT_REF" || git switch "$KUBESPRAY_GIT_REF"
       fi
 
-      branch=$(git rev-parse --abbrev-ref HEAD)
+      branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
       hash=$(git log -1 --pretty=format:%h)
     } >&2
 
-    pip3 install --user -r requirements.txt >&2
+    pip3 install --user -r ${path.module}/kubespray/requirements.txt >&2
 
     echo "{
       \"hash\": \"$hash\",
@@ -34,9 +26,8 @@ locals {
 
   git_state = <<EOF
     {
-      cd ${path.module}/kubespray
       hash=$(git log -1 --pretty=format:%h)
-      branch=$(git rev-parse --abbrev-ref HEAD)
+      branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
     } >&2
 
     echo "{
@@ -48,8 +39,7 @@ locals {
 
   git_reset = <<EOF
     {
-      cd ${path.module}/kubespray
-      git switch -c master
+      git switch master || git switch main
       git reset --hard
     } >&2
     echo {}

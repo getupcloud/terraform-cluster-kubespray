@@ -41,6 +41,7 @@ resource "shell_script" "kubespray-repo" {
 
   environment = {
     KUBESPRAY_GIT_REF = var.kubespray_git_ref
+    GIT_DIR           = join("/", [ path.module, "kubespray", ".git" ])
   }
 }
 
