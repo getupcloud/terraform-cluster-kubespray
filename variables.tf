@@ -8,12 +8,6 @@ variable "customer" {
   type        = string
 }
 
-variable "kubespray_git_ref" {
-  description = "Kubespray ref name"
-  type        = string
-  default     = "remotes/origin/release-2.17"
-}
-
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"

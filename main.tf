@@ -4,21 +4,23 @@ module "internet" {
 
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
+  count  = var.deploy_components ? 1 : 0
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/kubespray/manifests"
   wait           = var.flux_wait
   manifests_template_vars = {
-    cronitor_id : module.cronitor.cronitor_id
+    cronitor_id : module.cronitor[0].cronitor_id
   }
 }
 
 module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
+  count  = var.deploy_components ? 1 : 0
 
   cluster_name  = var.name
   customer_name = var.customer
-  suffix        = "ksp"
+  suffix        = "kspray"
   tags          = [var.kubespray_git_ref]
   pagerduty_key = var.cronitor_pagerduty_key
   api_key       = var.cronitor_api_key
