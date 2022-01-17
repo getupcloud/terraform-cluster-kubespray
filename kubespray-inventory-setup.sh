@@ -30,12 +30,15 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
-  for node in $(jq -r '.[]|.hostname' <<<${MASTER_NODES_JSON}); do
-    #local labels=$(jq -r '.[]|select(hostname == "'$node'") | .labels')
-    #if [ -n "$labels" ]
-    #yq e -i '.all.hosts.*.node_labels.role="infra"' /cluster/hosts.yaml
-    :
-  done
+  echo -e "$MASTER_NODES $INFRA_NODES $APP_NODES" \
+    | jq -s '.[] | .[] | {(.hostname // .address):{taints: .taints, labels: .labels}}' \
+    | jq -s add \
+    | jq '{all:{hosts:.}}' \
+    | yq e -P - \
+    > /tmp/hosts-patch.yaml
+
+  yq eval-all 'select(fileIndex==0) * select(fileIndex==1)' $INVENTORY_FILE /tmp/hosts-patch.yaml > $INVENTORY_FILE.tmp
+  mv $INVENTORY_FILE.tmp $INVENTORY_FILE
 }
 
 function copy_group_vars()
