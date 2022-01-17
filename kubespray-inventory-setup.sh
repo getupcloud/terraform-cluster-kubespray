@@ -30,6 +30,8 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
+  for node in $(jq -r '.[]|.hostname' <<<${MASTER_NODES_JSON}); do
+  done
   #yq e -i '.all.hosts.*.node_labels.role="infra"' /cluster/hosts.yaml
 }
 

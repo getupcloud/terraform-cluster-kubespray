@@ -12,7 +12,7 @@ locals {
   }, node)]
 
   infra_nodes = [for i, node in var.infra_nodes : merge({
-    node_type : "infra"
+    node_type : "worker"
     hostname : "infra-${i}"
     disks : {}
     labels : var.default_infra_node_labels
@@ -20,7 +20,7 @@ locals {
   }, node)]
 
   app_nodes = [for i, node in var.app_nodes : merge({
-    node_type : "app"
+    node_type : "worker"
     hostname : "app-${i}"
     disks : {}
     labels : var.default_app_node_labels
