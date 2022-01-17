@@ -27,6 +27,7 @@ function create_inventory_file()
     $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${APP_NODES_JSON})
   )
 
+  chmod +x $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
