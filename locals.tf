@@ -7,20 +7,25 @@ locals {
     node_type : "master"
     hostname : "master-${i}"
     disks : {}
-    node_labels : var.default_master_node_labels
+    labels : var.default_master_node_labels
+    taints : var.default_master_node_taints
   }, node)]
 
-  infra_nodes  = [for i, node in var.infra_nodes : merge({
+  infra_nodes = [for i, node in var.infra_nodes : merge({
     node_type : "infra"
     hostname : "infra-${i}"
     disks : {}
-    node_labels : var.default_infra_node_labels
+    labels : var.default_infra_node_labels
+    taints : var.default_infra_node_taints
   }, node)]
 
-  app_nodes    = [for i, node in var.app_nodes : merge({
+  app_nodes = [for i, node in var.app_nodes : merge({
     node_type : "app"
     hostname : "app-${i}"
     disks : {}
-    node_labels : var.default_app_node_labels
+    labels : var.default_app_node_labels
+    taints : var.default_app_node_taints
   }, node)]
+
+  all_nodes = concat(local.master_nodes, local.infra_nodes, local.app_nodes)
 }

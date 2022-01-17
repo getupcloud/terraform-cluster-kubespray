@@ -128,23 +128,48 @@ variable "app_nodes" {
   ]
 }
 
+## labels
+
 variable "default_master_node_labels" {
   description = "Default labels for master nodes"
   default     = {}
 }
 
 variable "default_infra_node_labels" {
-  description = "Default labels for app nodes"
-  default     = {
+  description = "Default labels for infra nodes"
+  default = {
     role : "infra"
   }
 }
 
 variable "default_app_node_labels" {
   description = "Default labels for app nodes"
-  default     = {
+  default = {
     role : "app"
   }
+}
+
+## taints
+
+variable "default_master_node_taints" {
+  description = "Default taints for master nodes"
+  default     = []
+}
+
+variable "default_infra_node_taints" {
+  description = "Default taints for infra nodes"
+  default = [
+    {
+      key : "dedicated"
+      value : "infra"
+      effect : "NoSchedule"
+    }
+  ]
+}
+
+variable "default_app_node_taints" {
+  description = "Default taints for app nodes"
+  default     = []
 }
 
 variable "ssh_user" {

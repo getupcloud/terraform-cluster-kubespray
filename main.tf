@@ -30,8 +30,7 @@ module "cronitor" {
 module "provisioner" {
   source = "github.com/getupcloud/terraform-module-provisioner?ref=main"
 
-  masters         = var.masters
-  workers         = var.workers
+  nodes           = local.all_nodes
   ssh_user        = var.ssh_user
   ssh_private_key = var.ssh_private_key
   etc_hosts       = var.etc_hosts
