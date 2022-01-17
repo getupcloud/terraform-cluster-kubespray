@@ -31,13 +31,12 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
-  {
-    printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
-    | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
-    | jq -s add \
-    | jq '{all:{hosts:.}}' \
-    | yq e -P - \
-    > /tmp/hosts-patch.yaml
+  printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
+  | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
+  | jq -s add \
+  | jq '{all:{hosts:.}}' \
+  | yq e -P - \
+  > /tmp/hosts-patch.yaml
 
   yq eval-all 'select(fileIndex==0) * select(fileIndex==1)' $INVENTORY_FILE /tmp/hosts-patch.yaml > $INVENTORY_FILE.tmp
   yq -i e '.all.children.etcd.hosts = .all.children.kube_control_plane.hosts' $INVENTORY_FILE.tmp
