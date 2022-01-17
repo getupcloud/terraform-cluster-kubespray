@@ -9,7 +9,7 @@ set -eu
 function command_create()
 {
   {
-    if ! [ -d $KUBESPRAY_DIR ]; then
+    if ! [ -d "${GIT_DIR}" ]; then
       git clone $KUBESPRAY_GIT_REPO $KUBESPRAY_DIR
     fi
 
@@ -42,6 +42,11 @@ function command_update()
 
 function command_read()
 {
+  if ! [ -d $GIT_DIR ]; then
+    echo {}
+    return
+  fi
+
   {
     hash=$(git log -1 --pretty=format:%h)
     branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
