@@ -32,12 +32,7 @@ function create_inventory_file()
 
   # add labels and taints
   {
-    cat <<EOF
-      $MASTER_NODES_JSON
-      $INFRA_NODES_JSON
-      $APP_NODES_JSON
-EOF
-    } \
+    printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
     | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
     | jq -s add \
     | jq '{all:{hosts:.}}' \
@@ -45,7 +40,8 @@ EOF
     > /tmp/hosts-patch.yaml
 
   yq eval-all 'select(fileIndex==0) * select(fileIndex==1)' $INVENTORY_FILE /tmp/hosts-patch.yaml > $INVENTORY_FILE.tmp
-  mv $INVENTORY_FILE.tmp $INVENTORY_FILE
+  yq -i e '.all.children.etcd.hosts = .all.children.kube_control_plane.hosts' $INVENTORY_FILE.tmp
+  cp -f $INVENTORY_FILE.tmp $INVENTORY_FILE
 }
 
 function copy_group_vars()
