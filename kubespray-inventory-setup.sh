@@ -31,8 +31,11 @@ function create_inventory_file()
 
   # add labels and taints
   for node in $(jq -r '.[]|.hostname' <<<${MASTER_NODES_JSON}); do
+    #local labels=$(jq -r '.[]|select(hostname == "'$node'") | .labels')
+    #if [ -n "$labels" ]
+    #yq e -i '.all.hosts.*.node_labels.role="infra"' /cluster/hosts.yaml
+    :
   done
-  #yq e -i '.all.hosts.*.node_labels.role="infra"' /cluster/hosts.yaml
 }
 
 function copy_group_vars()
