@@ -54,9 +54,9 @@ resource "shell_script" "kubespray-repo" {
     KUBESPRAY_DIR      = var.kubespray_dir
     GIT_DIR            = "${var.kubespray_dir}/.git"
     INVENTORY_FILE     = var.inventory_file
-    MASTER_NODES       = base64encode(jsonencode(var.master_nodes))
-    INFRA_NODES        = base64encode(jsonencode(var.infra_nodes))
-    APP_NODES          = base64encode(jsonencode(var.app_nodes))
+    MASTER_NODES       = base64encode(jsonencode(local.master_nodes))
+    INFRA_NODES        = base64encode(jsonencode(local.infra_nodes))
+    APP_NODES          = base64encode(jsonencode(local.app_nodes))
   }
 }
 
@@ -76,9 +76,9 @@ resource "shell_script" "kubespray-inventory" {
     KUBESPRAY_DIR      = var.kubespray_dir
     GIT_DIR            = "${var.kubespray_dir}/.git"
     INVENTORY_FILE     = var.inventory_file
-    MASTER_NODES       = base64encode(jsonencode(var.master_nodes))
-    INFRA_NODES        = base64encode(jsonencode(var.infra_nodes))
-    APP_NODES          = base64encode(jsonencode(var.app_nodes))
+    MASTER_NODES       = base64encode(jsonencode(local.master_nodes))
+    INFRA_NODES        = base64encode(jsonencode(local.infra_nodes))
+    APP_NODES          = base64encode(jsonencode(local.app_nodes))
   }
 }
 
