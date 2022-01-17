@@ -17,9 +17,9 @@ set -eu
 
 function create_inventory_file()
 {
-  if [ -e "$CONFIG_FILE" ]; then
-    return
-  fi
+  #if [ -e "$CONFIG_FILE" ]; then
+  #  return
+  #fi
 
   local nodes=(
     $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${MASTER_NODES_JSON})
@@ -31,8 +31,14 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
-  echo -e "$MASTER_NODES $INFRA_NODES $APP_NODES" \
-    | jq -s '.[] | .[] | {(.hostname // .address):{taints: .taints, labels: .labels}}' \
+  {
+    cat <<EOF
+      $MASTER_NODES_JSON
+      $INFRA_NODES_JSON
+      $APP_NODES_JSON
+EOF
+    } \
+    | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
     | jq -s add \
     | jq '{all:{hosts:.}}' \
     | yq e -P - \

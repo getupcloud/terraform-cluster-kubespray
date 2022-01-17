@@ -159,11 +159,7 @@ variable "default_master_node_taints" {
 variable "default_infra_node_taints" {
   description = "Default taints for infra nodes"
   default = [
-    {
-      key : "dedicated"
-      value : "infra"
-      effect : "NoSchedule"
-    }
+    "dedicated=infra:NoSchedule"
   ]
 }
 
