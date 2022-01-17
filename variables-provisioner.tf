@@ -28,7 +28,7 @@ variable "inventory_file" {
   default     = "/cluster/hosts.yaml"
 }
 
-variable "masters" {
+variable "master_nodes" {
   description = "List of master nodes to provision"
   type        = list(any)
   default = [
@@ -54,8 +54,7 @@ variable "masters" {
     }
   ]
 }
-
-variable "workers" {
+variable "infra_nodes" {
   description = "List of worker nodes to provision"
   type        = list(any)
   default = [
@@ -90,6 +89,62 @@ variable "workers" {
       }
     }
   ]
+}
+
+variable "app_nodes" {
+  description = "List of worker nodes to provision"
+  type        = list(any)
+  default = [
+    {
+      address : "2.2.2.2",
+      hostname : "infra-0"
+
+      disks : {
+        kubelet : {
+          device : "/dev/sdb",
+          mountpoint : "/var/lib/kubelet",
+        }
+        containers : {
+          device : "/dev/sdc",
+          mountpoint : "/var/lib/containers",
+        }
+      }
+    },
+    {
+      address : "3.3.3.3",
+      hostname : "app-0",
+
+      disks : {
+        kubelet : {
+          device : "/dev/sdb",
+          mountpoint : "/var/lib/kubelet",
+        }
+        containers : {
+          device : "/dev/sdc",
+          mountpoint : "/var/lib/containers",
+        }
+      }
+    }
+  ]
+}
+
+variable "default_master_node_labels" {
+  description = "Default labels for master nodes"
+  default     = {}
+}
+
+variable "default_infra_node_labels" {
+  description = "Default labels for app nodes"
+  default     = {
+    role : "infra"
+  }
+}
+
+variable "default_app_node_labels" {
+  description = "Default labels for app nodes"
+  default     = {
+    role : "app"
+  }
 }
 
 variable "ssh_user" {

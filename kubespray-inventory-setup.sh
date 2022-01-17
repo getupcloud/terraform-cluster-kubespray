@@ -6,11 +6,12 @@ fi
 
 export INVENTORY_DIR="$(dirname $INVENTORY_FILE)"
 export GROUP_VARS_DIR="$INVENTORY_DIR/group_vars"
-export MASTERS_JSON="$(base64 -d <<<$MASTERS)"
-export WORKERS_JSON="$(base64 -d <<<$WORKERS)"
+export MASTER_NODES_JSON="$(base64 -d <<<$MASTER_NODES)"
+export INFRA_NODES_JSON="$(base64 -d <<<$INFRA_NODES)"
+export APP_NODES_JSON="$(base64 -d <<<$APP_NODES)"
 # inventory_builder vars
 export CONFIG_FILE="$INVENTORY_FILE"
-export KUBE_CONTROL_HOSTS=$(jq length <<<$MASTERS_JSON)
+export KUBE_CONTROL_HOSTS=$(jq length <<<$MASTER_NODES_JSON)
 
 set -eu
 
@@ -21,11 +22,15 @@ function create_inventory_file()
   fi
 
   local nodes=(
-    $(jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<${MASTERS_JSON})
-    $(jq '.[]|"\(.hostname) ansible_host=\(.address // empty)"' <<<${WORKERS_JSON})
+    $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${MASTER_NODES_JSON})
+    $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${INFRA_NODES_JSON})
+    $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${APP_NODES_JSON})
   )
 
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
+
+  # add labels and taints
+  #yq e -i '.all.hosts.*.node_labels.role="infra"' /cluster/hosts.yaml
 }
 
 function copy_group_vars()
