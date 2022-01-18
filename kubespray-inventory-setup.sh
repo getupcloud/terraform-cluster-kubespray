@@ -77,8 +77,8 @@ function command_read()
   fi
 
   jq -Mcn \
-    --arg i $inventory_hash \
-    --arg g $group_vars_dir \
+    --arg i "$inventory_hash" \
+    --arg g "$group_vars_dir" \
     '{"inventory_hash": $i, "group_vars_dir": $g}'
 }
 
