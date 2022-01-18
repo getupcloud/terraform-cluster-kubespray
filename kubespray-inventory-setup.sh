@@ -40,7 +40,7 @@ function create_inventory_file()
 
   yq eval-all 'select(fileIndex==0) * select(fileIndex==1)' $INVENTORY_FILE /tmp/hosts-patch.yaml > $INVENTORY_FILE.tmp
   yq -i e '.all.children.etcd.hosts = .all.children.kube_control_plane.hosts' $INVENTORY_FILE.tmp
-  cp -f $INVENTORY_FILE.tmp $INVENTORY_FILE
+  mv -f $INVENTORY_FILE.tmp $INVENTORY_FILE
 }
 
 function copy_group_vars()
