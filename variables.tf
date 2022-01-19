@@ -16,7 +16,7 @@ variable "kubeconfig_filename" {
 
 variable "get_kubeconfig_command" {
   description = "Command to create/update kubeconfig"
-  default     = "true"
+  default     = "ln -fs $CLUSTER_DIR/artifacts/admin.conf $KUBECONFIG"
 }
 
 variable "flux_git_repo" {

@@ -82,4 +82,10 @@ resource "shell_script" "kubespray-inventory" {
   }
 }
 
+module "kubeconfig" {
+  source = "github.com/getupcloud/terraform-module-kubeconfig?ref=main"
 
+  cluster_name = var.name
+  command      = var.get_kubeconfig_command
+  kubeconfig   = var.kubeconfig_filename
+}
