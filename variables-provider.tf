@@ -139,6 +139,7 @@ variable "default_infra_node_labels" {
   description = "Default labels for infra nodes"
   default = {
     role : "infra"
+    "node-role.kubernetes.io/infra": ""
   }
 }
 
@@ -146,6 +147,7 @@ variable "default_app_node_labels" {
   description = "Default labels for app nodes"
   default = {
     role : "app"
+    "node-role.kubernetes.io/app": ""
   }
 }
 
