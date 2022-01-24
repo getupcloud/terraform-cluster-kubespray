@@ -10,7 +10,7 @@ module "flux" {
   manifests_path = "./clusters/${var.cluster_name}/kubespray/manifests"
   wait           = var.flux_wait
   manifests_template_vars = merge({
-    cronitor_id : module.cronitor[0].cronitor_id
+    alertmanager_cronitor_id : module.cronitor[0].cronitor_id
   }, var.manifests_template_vars)
 }
 
