@@ -1,9 +1,15 @@
-variable "name" {
+variable "cluster_name" {
   description = "Cluster name"
   type        = string
 }
 
-variable "customer" {
+variable "cluster_sla" {
+  description = "Cluster SLA"
+  type        = string
+  default     = "none"
+}
+
+variable "customer_name" {
   description = "Customer name"
   type        = string
 }

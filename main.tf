@@ -7,7 +7,7 @@ module "flux" {
   count  = var.deploy_components ? 1 : 0
 
   git_repo       = var.flux_git_repo
-  manifests_path = "./clusters/${var.name}/kubespray/manifests"
+  manifests_path = "./clusters/${var.cluster_name}/kubespray/manifests"
   wait           = var.flux_wait
   manifests_template_vars = {
     cronitor_id : module.cronitor[0].cronitor_id
@@ -18,8 +18,9 @@ module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
   count  = var.deploy_components ? 1 : 0
 
-  cluster_name  = var.name
-  customer_name = var.customer
+  cluster_name  = var.cluster_name
+  customer_name = var.customer_name
+  cluster_sla   = var.cluster_sla
   suffix        = "kspray"
   tags          = [var.kubespray_git_ref]
   pagerduty_key = var.cronitor_pagerduty_key
@@ -85,7 +86,7 @@ resource "shell_script" "kubespray-inventory" {
 module "kubeconfig" {
   source = "github.com/getupcloud/terraform-module-kubeconfig?ref=main"
 
-  cluster_name = var.name
+  cluster_name = var.cluster_name
   command      = var.get_kubeconfig_command
   kubeconfig   = var.kubeconfig_filename
 }
