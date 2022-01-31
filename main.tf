@@ -1,9 +1,9 @@
 module "internet" {
-  source = "github.com/getupcloud/terraform-module-internet?ref=main"
+  source = "github.com/getupcloud/terraform-module-internet?ref=v1.0"
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=main"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v1.0"
   count  = var.deploy_components ? 1 : 0
 
   git_repo       = var.flux_git_repo
@@ -15,7 +15,7 @@ module "flux" {
 }
 
 module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.0"
   count  = var.deploy_components ? 1 : 0
 
   cluster_name  = var.cluster_name
@@ -29,7 +29,7 @@ module "cronitor" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=main"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.0"
 
   nodes           = local.all_nodes
   ssh_user        = var.ssh_user
@@ -84,7 +84,7 @@ resource "shell_script" "kubespray-inventory" {
 }
 
 module "kubeconfig" {
-  source = "github.com/getupcloud/terraform-module-kubeconfig?ref=main"
+  source = "github.com/getupcloud/terraform-module-kubeconfig?ref=v1.0"
 
   cluster_name = var.cluster_name
   command      = var.get_kubeconfig_command
