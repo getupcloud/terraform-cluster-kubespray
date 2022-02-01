@@ -9,6 +9,8 @@ module "flux" {
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.cluster_name}/kubespray/manifests"
   wait           = var.flux_wait
+  flux_version   = var.flux_version
+
   manifests_template_vars = merge({
     alertmanager_cronitor_id : module.cronitor[0].cronitor_id
   }, var.manifests_template_vars)

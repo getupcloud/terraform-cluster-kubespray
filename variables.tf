@@ -25,6 +25,12 @@ variable "get_kubeconfig_command" {
   default     = "ln -fs $CLUSTER_DIR/artifacts/admin.conf $KUBECONFIG"
 }
 
+variable "flux_version" {
+  description = "Flux version to install"
+  type        = string
+  default     = "v0.15.3"
+}
+
 variable "flux_git_repo" {
   description = "GitRepository URL."
   type        = string
