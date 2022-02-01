@@ -52,10 +52,9 @@ resource "shell_script" "kubespray-repo" {
   }
 
   environment = {
-    KUBESPRAY_GIT_REPO = var.kubespray_git_repo
+    KUBESPRAY_REPO_DIR = "${path.module}/kubespray"
     KUBESPRAY_GIT_REF  = var.kubespray_git_ref
     KUBESPRAY_DIR      = var.kubespray_dir
-    GIT_DIR            = "${var.kubespray_dir}/.git"
     INVENTORY_FILE     = var.inventory_file
     MASTER_NODES       = base64encode(jsonencode(local.master_nodes))
     INFRA_NODES        = base64encode(jsonencode(local.infra_nodes))
@@ -74,10 +73,9 @@ resource "shell_script" "kubespray-inventory" {
   }
 
   environment = {
-    KUBESPRAY_GIT_REPO = var.kubespray_git_repo
+    KUBESPRAY_REPO_DIR = "${path.module}/kubespray"
     KUBESPRAY_GIT_REF  = var.kubespray_git_ref
     KUBESPRAY_DIR      = var.kubespray_dir
-    GIT_DIR            = "${var.kubespray_dir}/.git"
     INVENTORY_FILE     = var.inventory_file
     MASTER_NODES       = base64encode(jsonencode(local.master_nodes))
     INFRA_NODES        = base64encode(jsonencode(local.infra_nodes))

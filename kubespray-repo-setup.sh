@@ -1,71 +1,60 @@
 #!/bin/bash
 
-if [ -z "$GIT_DIR" ]; then
-  export GIT_DIR=$KUBESPRAY_DIR/.git
+if [ -z "$KUBESPRAY_REPO_DIR" ]; then
+  echo Missing var KUBESPRAY_REPO_DIR
+  exit 1
 fi
+
+export GIT_DIR=$KUBESPRAY_REPO_DIR/.git
 
 set -eu
 
-function command_create()
+function validate_parameters()
 {
-  {
-    if ! [ -d "${GIT_DIR}" ]; then
-      git clone $KUBESPRAY_GIT_REPO $KUBESPRAY_DIR
-    fi
-
-    branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
-
-    if [ "$branch" != "$KUBESPRAY_GIT_REF" ]; then
-      git switch -c "$KUBESPRAY_GIT_REF" || git switch "$KUBESPRAY_GIT_REF"
-    fi
-
-    branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
-    hash=$(git log -1 --pretty=format:%h)
-
-  } >&2
-
-  if [ "$branch" != "$KUBESPRAY_GIT_REF" ]; then
-    echo "Invalid kubespray git ref: $KUBESPRAY_GIT_REF"
+  if ! [[ "${KUBESPRAY_GIT_REF}" =~ ^refs/(heads|tags)/. ]]; then
+    echo "Invalid git ref: $KUBESPRAY_GIT_REF. Accepted format: refs/{heads|tags}/{name}"
     exit 1
   fi
+}
 
-  pip3 install --user -r $KUBESPRAY_DIR/requirements.txt >&2
+function command_create()
+{
+  validate_parameters
 
+  if [ -e "$KUBESPRAY_DIR" ]; then
+    rm -rf "$KUBESPRAY_DIR"
+  fi
+
+  ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
+
+  git checkout "$KUBESPRAY_GIT_REF" >&2
+  pip3 install --user -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
   command_read
 }
 
 function command_update()
 {
+  validate_parameters
   command_create
-  command_read
 }
 
 function command_read()
 {
-  if ! [ -d $GIT_DIR ]; then
-    echo {}
-    return
-  fi
-
   {
-    hash=$(git log -1 --pretty=format:%h)
-    branch=$(git rev-parse --abbrev-ref HEAD | sed -e 's|^heads/||')
+    git_hash=$(git log -1 --pretty=format:%h)
+    git_ref="$(git rev-parse --symbolic-full-name HEAD)"
+    requirements_txt_id=$(md5sum $KUBESPRAY_REPO_DIR/requirements.txt | awk '{print $1}')
   } >&2
 
   jq -Mcn \
-    --arg h $hash \
-    --arg r $KUBESPRAY_GIT_REF \
-    --arg b $branch \
-    '{"hash": $h, "ref": $r, "branch": $b}'
+    --arg git_hash $git_hash \
+    --arg git_ref $git_ref \
+    --arg requirements_txt_id $requirements_txt_id \
+    '{"git_hash": $git_hash, "git_ref": $git_ref, "requirements_txt_id": $requirements_txt_id}'
 }
 
 function command_delete()
 {
-  {
-    git switch master || git switch main
-    git reset --hard
-  } >&2
-
   echo {}
 }
 
