@@ -178,7 +178,7 @@ variable "ssh_password" {
 variable "ssh_private_key" {
   description = "Path for SSH private key"
   type        = string
-  default     = "~/.ssh/id_rsa"
+  default     = ""
 }
 
 variable "ssh_bastion_host" {
@@ -202,7 +202,7 @@ variable "ssh_bastion_password" {
 variable "ssh_bastion_private_key" {
   description = "Path for SSH bastion private key"
   type        = string
-  default     = "~/.ssh/id_rsa"
+  default     = ""
 }
 
 variable "custom_provisioner" {
