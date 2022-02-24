@@ -33,10 +33,17 @@ module "cronitor" {
 module "provisioner" {
   source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.2"
 
-  nodes           = local.all_nodes
-  ssh_user        = var.ssh_user
-  ssh_private_key = var.ssh_private_key
-  etc_hosts       = var.etc_hosts
+  nodes                   = local.all_nodes
+  ssh_user                = var.ssh_user
+  ssh_password            = var.ssh_password
+  ssh_private_key         = var.ssh_private_key
+  ssh_bastion_host        = var.ssh_bastion_host
+  ssh_bastion_user        = var.ssh_bastion_user
+  ssh_bastion_password    = var.ssh_bastion_password
+  ssh_bastion_private_key = var.ssh_bastion_private_key
+  install_packages        = var.install_packages
+  uninstall_packages      = var.uninstall_packages
+  etc_hosts               = var.etc_hosts
 }
 
 resource "shell_script" "kubespray-repo" {
