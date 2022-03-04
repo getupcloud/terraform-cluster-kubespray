@@ -2,6 +2,17 @@ module "internet" {
   source = "github.com/getupcloud/terraform-module-internet?ref=v1.0"
 }
 
+module "teleport-agent" {
+  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.1"
+
+  auth_token       = var.teleport_auth_token
+  cluster_name     = var.cluster_name
+  customer_name    = var.customer_name
+  cluster_sla      = var.cluster_sla
+  cluster_provider = "kubespray"
+  cluster_region   = var.cluster_region
+}
+
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=v1.0"
   count  = var.deploy_components ? 1 : 0
@@ -13,7 +24,9 @@ module "flux" {
 
   manifests_template_vars = merge({
     alertmanager_cronitor_id : module.cronitor[0].cronitor_id
-  }, var.manifests_template_vars)
+    },
+    module.teleport-agent.teleport_agent_config,
+  var.manifests_template_vars)
 }
 
 module "cronitor" {

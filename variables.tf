@@ -14,6 +14,12 @@ variable "customer_name" {
   type        = string
 }
 
+variable "cluster_region" {
+  description = "Cluster region"
+  type        = string
+  default     = "unknown"
+}
+
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"
@@ -63,6 +69,12 @@ variable "cronitor_api_key" {
 
 variable "cronitor_pagerduty_key" {
   description = "Cronitor PagerDuty key"
+  type        = string
+  default     = ""
+}
+
+variable "teleport_auth_token" {
+  description = "Teleport Agent auth token"
   type        = string
   default     = ""
 }
