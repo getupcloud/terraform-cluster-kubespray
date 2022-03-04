@@ -1,3 +1,9 @@
+variable "region" {
+  description = "Cluster region"
+  type        = string
+  default     = "unknown"
+}
+
 variable "deploy_components" {
   description = "Either to deploy or not kubernetes components. Set to true after kubernetes is up and running."
   type        = bool

@@ -14,12 +14,6 @@ variable "customer_name" {
   type        = string
 }
 
-variable "cluster_region" {
-  description = "Cluster region"
-  type        = string
-  default     = "unknown"
-}
-
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"

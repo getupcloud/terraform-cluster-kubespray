@@ -10,7 +10,7 @@ module "teleport-agent" {
   customer_name    = var.customer_name
   cluster_sla      = var.cluster_sla
   cluster_provider = "kubespray"
-  cluster_region   = var.cluster_region
+  cluster_region   = var.region
 }
 
 module "flux" {
