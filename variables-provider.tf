@@ -218,7 +218,20 @@ variable "custom_provisioner" {
 }
 
 variable "install_packages" {
-  description = "Packages to install on nodes"
+  description = "Extra packages to install on nodes"
+  type        = list(string)
+  default     = []
+}
+
+variable "uninstall_packages" {
+  description = "Extra packages to uninstall from nodes"
+  type        = list(string)
+  default     = []
+}
+
+
+variable "install_packages_default" {
+  description = "Packages to install by default on nodes"
   type        = list(string)
   default = [
     "chrony",
@@ -239,8 +252,8 @@ variable "install_packages" {
   ]
 }
 
-variable "uninstall_packages" {
-  description = "Packages to install on nodes"
+variable "uninstall_packages_default" {
+  description = "Packages to uninstall by default on nodes"
   type        = list(string)
   default = [
     "firewalld",

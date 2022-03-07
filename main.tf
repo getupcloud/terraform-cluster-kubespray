@@ -54,8 +54,8 @@ module "provisioner" {
   ssh_bastion_user        = var.ssh_bastion_user
   ssh_bastion_password    = var.ssh_bastion_password
   ssh_bastion_private_key = var.ssh_bastion_private_key
-  install_packages        = var.install_packages
-  uninstall_packages      = var.uninstall_packages
+  install_packages        = concat(var.install_packages, var.install_packages_default)
+  uninstall_packages      = concat(var.uninstall_packages, var.uninstall_packages_default)
   etc_hosts               = var.etc_hosts
 }
 
