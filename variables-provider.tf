@@ -229,11 +229,14 @@ variable "uninstall_packages" {
   default     = []
 }
 
-
 variable "install_packages_default" {
   description = "Packages to install by default on nodes"
   type        = list(string)
   default = [
+    "kernel-devel",
+    "kernel-headers",
+    "clang",
+    "llvm",
     "chrony",
     "conntrack-tools",
     "git",
