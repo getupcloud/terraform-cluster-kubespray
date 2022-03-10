@@ -46,11 +46,22 @@ function command_read()
     requirements_txt_id=$(md5sum $KUBESPRAY_REPO_DIR/requirements.txt | awk '{print $1}')
   } >&2
 
+  kubespray_link=""
+  if [ -e "$KUBESPRAY_DIR" ]; then
+    kubespray_link="$KUBESPRAY_DIR"
+  fi
+
   jq -Mcn \
     --arg git_hash $git_hash \
     --arg git_ref $git_ref \
     --arg requirements_txt_id $requirements_txt_id \
-    '{"git_hash": $git_hash, "git_ref": $git_ref, "requirements_txt_id": $requirements_txt_id}'
+    --arg kubespray_link $kubespray_link \
+    '{
+        "git_hash": $git_hash,
+        "git_ref": $git_ref,
+        "requirements_txt_id": $requirements_txt_id,
+        "kubespray_repo": $kubespray_link
+    }'
 }
 
 function command_delete()
