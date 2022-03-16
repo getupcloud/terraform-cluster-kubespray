@@ -1,7 +1,8 @@
 locals {
-  kubeconfig = abspath(pathexpand(var.kubeconfig_filename))
-  suffix     = random_string.suffix.result
-  secret     = random_string.secret.result
+  kubeconfig_filename = abspath(pathexpand(var.kubeconfig_filename))
+
+  suffix = random_string.suffix.result
+  secret = random_string.secret.result
 
   master_nodes = [for i, node in var.master_nodes : merge({
     node_type : "master"
