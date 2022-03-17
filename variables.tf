@@ -82,3 +82,8 @@ variable "manifests_template_vars" {
   }
 }
 
+variable "use_kubeconfig" {
+  description = "Should kubernetes/kubectl providers use local kubeconfig or credentials from cloud module"
+  type        = bool
+  default     = false
+}

@@ -32,5 +32,3 @@ override.tf.json
 .terraformrc
 terraform.rc
 .history
-
-providers.tf
