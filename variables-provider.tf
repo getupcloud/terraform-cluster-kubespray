@@ -241,6 +241,7 @@ variable "install_packages_default" {
     "conntrack-tools",
     "git",
     "iproute-tc",
+    "iscsi-initiator-utils",
     "jq",
     "moreutils",
     "netcat",
