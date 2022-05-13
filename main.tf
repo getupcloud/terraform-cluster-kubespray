@@ -44,7 +44,7 @@ module "cronitor" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.3"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.4"
 
   nodes                   = local.all_nodes
   ssh_user                = var.ssh_user
@@ -56,6 +56,8 @@ module "provisioner" {
   ssh_bastion_private_key = var.ssh_bastion_private_key
   install_packages        = concat(var.install_packages, var.install_packages_default)
   uninstall_packages      = concat(var.uninstall_packages, var.uninstall_packages_default)
+  systemctl_enable        = var.systemctl_enable
+  systemctl_disable       = var.systemctl_disable
   etc_hosts               = var.etc_hosts
 }
 
