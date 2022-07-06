@@ -3,7 +3,7 @@ module "internet" {
 }
 
 module "teleport-agent" {
-  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.2"
+  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.3"
 
   auth_token       = var.teleport_auth_token
   cluster_name     = var.cluster_name
@@ -14,7 +14,7 @@ module "teleport-agent" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v1.6"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v1.10"
   count  = var.deploy_components ? 1 : 0
 
   git_repo       = var.flux_git_repo
