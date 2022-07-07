@@ -100,6 +100,18 @@ variable "use_kubeconfig" {
   default     = false
 }
 
+variable "kubespray_modules" {
+  description = "Configure modules to install"
+  type        = any
+  default     = {}
+}
+
+variable "kubespray_modules_defaults" {
+  description = "Configure modules to install (defaults)"
+  type        = any
+  default     = {}
+}
+
 variable "pre_create" {
   description = "Scripts to execute before cluster is created."
   type        = list(string)

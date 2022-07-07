@@ -4,6 +4,10 @@ locals {
   suffix = random_string.suffix.result
   secret = random_string.secret.result
 
+  kubespray_modules        = merge(var.kubespray_modules_defaults, var.kubespray_modules)
+  kubespray_modules_output = {}
+
+
   master_nodes = [for i, node in var.master_nodes : merge({
     node_type : "master"
     hostname : "master-${i}"

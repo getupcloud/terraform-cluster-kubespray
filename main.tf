@@ -26,6 +26,8 @@ module "flux" {
     {
       alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
+      modules : local.kubespray_modules
+      modules_output : local.kubespray_modules_output
     },
     module.teleport-agent.teleport_agent_config,
     var.manifests_template_vars
