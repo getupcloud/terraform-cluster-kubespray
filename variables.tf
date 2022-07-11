@@ -67,6 +67,12 @@ variable "cronitor_pagerduty_key" {
   default     = ""
 }
 
+variable "cronitor_notification_list" {
+  description = "Cronitor Notification List to send alerts"
+  type        = list(string)
+  default     = []
+}
+
 variable "opsgenie_enabled" {
   description = "Creates and enables Opsgenie integration."
   type        = bool
