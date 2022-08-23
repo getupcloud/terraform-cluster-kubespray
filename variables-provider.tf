@@ -13,7 +13,7 @@ variable "deploy_components" {
 variable "kubespray_git_ref" {
   description = "Kubespray ref name"
   type        = string
-  default     = "refs/tags/v2.17.1"
+  default     = "remotes/origin/release-2.17"
 }
 
 variable "kubespray_dir" {

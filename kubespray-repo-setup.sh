@@ -11,10 +11,14 @@ set -eu
 
 function validate_parameters()
 {
-  if ! [[ "${KUBESPRAY_GIT_REF}" =~ ^refs/(heads|tags)/. ]]; then
-    echo "Invalid git ref: $KUBESPRAY_GIT_REF. Accepted format: refs/{heads|tags}/{name}"
-    exit 1
+  if [[ "${KUBESPRAY_GIT_REF}" =~ ^refs/(heads|tags)/.* ]]; then
+    return 0
+  elif [[ "${KUBESPRAY_GIT_REF}" =~ ^remotes/origin/.* ]]; then
+    return 0
   fi
+
+  echo "Invalid git ref: $KUBESPRAY_GIT_REF. Accepted format: refs/{heads|tags}/{name}"
+  exit 1
 }
 
 function command_create()
