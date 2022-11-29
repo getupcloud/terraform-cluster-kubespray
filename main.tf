@@ -17,12 +17,12 @@ module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=v2.0.0-beta4"
   count  = var.deploy_components ? 1 : 0
 
-  git_repo       = var.flux_git_repo
-  manifests_path = "./clusters/${var.cluster_name}/kubespray/manifests"
-  wait           = var.flux_wait
-  flux_version   = var.flux_version
-
+  git_repo                = var.flux_git_repo
+  manifests_path          = "./clusters/${var.cluster_name}/kubespray/manifests"
+  wait                    = var.flux_wait
+  flux_version            = var.flux_version
   manifests_template_vars = local.manifests_template_vars
+  debug                   = var.dump_debug
 }
 
 module "cronitor" {

@@ -1,6 +1,16 @@
 ## Provider specific variables
 ## Copy to toplevel
 
+variable "cluster_provider" {
+  description = "Cluster provider name"
+  type        = string
+
+  validation {
+    condition     = contains(["onprem", "aws", "azure", "gcp", "do"], var.cluster_provider)
+    error_message = "The Cluster Provider is invalid."
+  }
+}
+
 variable "api_endpoint" {
   description = "Kubernetes API endpoint"
   type        = string

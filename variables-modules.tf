@@ -8,11 +8,15 @@ variable "modules_defaults" {
       enabled         = bool
       hosted_zone_ids = list(string)
     })
-    external-dns = object({
-      enabled         = bool
-      private         = bool
-      hosted_zone_ids = list(string)
-      domain_filters  = list(string)
+#    external-dns = object({
+#      enabled         = bool
+#      private         = bool
+#      hosted_zone_ids = list(string)
+#      domain_filters  = list(string)
+#    })
+    velero = object({
+      enabled     = bool
+      bucket_name = string
     })
   })
 
@@ -21,11 +25,15 @@ variable "modules_defaults" {
       enabled         = false
       hosted_zone_ids = []
     }
-    external-dns = {
-      enabled         = false
-      private         = false
-      hosted_zone_ids = []
-      domain_filters  = []
+#    external-dns = {
+#      enabled         = false
+#      private         = false
+#      hosted_zone_ids = []
+#      domain_filters  = []
+#    }
+    velero = {
+      enabled     = false
+      bucket_name = null
     }
   }
 }
@@ -36,11 +44,15 @@ locals {
       enabled         = try(var.modules.cert-manager.enabled, var.modules_defaults.cert-manager.enabled)
       hosted_zone_ids = try(var.modules.cert-manager.hosted_zone_ids, var.modules_defaults.cert-manager.hosted_zone_ids)
     }
-    external-dns = {
-      enabled         = try(var.modules.external-dns.enabled, var.modules_defaults.external-dns.enabled)
-      private         = try(var.modules.external-dns.private, var.modules_defaults.external-dns.private)
-      hosted_zone_ids = try(var.modules.external-dns.hosted_zone_ids, var.modules_defaults.external-dns.hosted_zone_ids)
-      domain_filters  = try(var.modules.external-dns.domain_filters, var.modules_defaults.external-dns.domain_filters)
+#    external-dns = {
+#      enabled         = try(var.modules.external-dns.enabled, var.modules_defaults.external-dns.enabled)
+#      private         = try(var.modules.external-dns.private, var.modules_defaults.external-dns.private)
+#      hosted_zone_ids = try(var.modules.external-dns.hosted_zone_ids, var.modules_defaults.external-dns.hosted_zone_ids)
+#      domain_filters  = try(var.modules.external-dns.domain_filters, var.modules_defaults.external-dns.domain_filters)
+#    }
+    velero = {
+      enabled         = try(var.modules.velero.enabled, var.modules_defaults.cert-manager.enabled)
+      hosted_zone_ids = try(var.modules.veloro.bucket_name, var.modules_defaults.velero.bucket_name)
     }
   })
 
