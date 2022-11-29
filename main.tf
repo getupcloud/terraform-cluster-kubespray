@@ -14,7 +14,7 @@ module "teleport-agent" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v1.10"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.0.0-beta4"
   count  = var.deploy_components ? 1 : 0
 
   git_repo       = var.flux_git_repo
@@ -22,34 +22,21 @@ module "flux" {
   wait           = var.flux_wait
   flux_version   = var.flux_version
 
-  manifests_template_vars = merge(
-    {
-      alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
-      alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
-      modules : local.kubespray_modules
-      modules_output : local.kubespray_modules_output
-    },
-    module.teleport-agent.teleport_agent_config,
-    var.manifests_template_vars
-  )
-
-  depends_on = [
-    shell_script.pre_create
-  ]
+  manifests_template_vars = local.manifests_template_vars
 }
 
 module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.4"
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=v2.0"
   count  = var.deploy_components ? 1 : 0
 
-  api_endpoint      = var.api_endpoint
-  cluster_name      = var.cluster_name
-  customer_name     = var.customer_name
-  cluster_sla       = var.cluster_sla
-  suffix            = "kspray"
-  tags              = [var.kubespray_git_ref]
-  pagerduty_key     = var.cronitor_pagerduty_key
-  notification_list = var.cronitor_notification_list
+  api_endpoint       = var.api_endpoint
+  cluster_name       = var.cluster_name
+  customer_name      = var.customer_name
+  cluster_sla        = var.cluster_sla
+  suffix             = "kspray"
+  tags               = [var.kubespray_git_ref]
+  pagerduty_key      = var.cronitor_pagerduty_key
+  notification_lists = var.cronitor_notification_lists
 }
 
 module "opsgenie" {
@@ -57,6 +44,7 @@ module "opsgenie" {
 
   opsgenie_enabled = var.opsgenie_enabled
   customer_name    = var.customer_name
+  cluster_name     = var.cluster_name
   owner_team_name  = var.opsgenie_team_name
 }
 

@@ -1,3 +1,12 @@
+## Provider specific variables
+## Copy to toplevel
+
+variable "api_endpoint" {
+  description = "Kubernetes API endpoint"
+  type        = string
+  default     = ""
+}
+
 variable "region" {
   description = "Cluster region"
   type        = string
@@ -284,4 +293,9 @@ variable "systemctl_disable" {
   description = "Services to disable on nodes"
   type        = list(string)
   default     = []
+}
+
+variable "get_kubeconfig_command" {
+  description = "Command to create/update kubeconfig"
+  default     = "ln -fs $CLUSTER_DIR/artifacts/admin.conf $KUBECONFIG"
 }

@@ -1,13 +1,6 @@
 locals {
   kubeconfig_filename = abspath(pathexpand(var.kubeconfig_filename))
 
-  suffix = random_string.suffix.result
-  secret = random_string.secret.result
-
-  kubespray_modules        = merge(var.kubespray_modules_defaults, var.kubespray_modules)
-  kubespray_modules_output = {}
-
-
   master_nodes = [for i, node in var.master_nodes : merge({
     node_type : "master"
     hostname : "master-${i}"
@@ -33,4 +26,23 @@ locals {
   }, node)]
 
   all_nodes = concat(local.master_nodes, local.infra_nodes, local.app_nodes)
+
+  modules_result = {
+    for name, config in local.modules : name => merge(config, {
+      output : config.enabled ? lookup(local.register_modules, name, try(config.output, tomap({}))) : tomap({})
+    })
+  }
+
+  manifests_template_vars = merge(
+    var.manifests_template_vars,
+    {
+      alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
+      alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
+      secret : random_string.secret.result
+      suffix : random_string.suffix.result
+      modules : local.modules_result
+    },
+    module.teleport-agent.teleport_agent_config,
+    { for k, v in var.manifests_template_vars : k => v if k != "modules" }
+  )
 }
