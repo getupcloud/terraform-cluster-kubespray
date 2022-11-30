@@ -8,7 +8,7 @@ resource "local_file" "debug-modules" {
 
 module "cert-manager" {
   count  = local.modules.cert-manager.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha4"
+  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha10"
 
   cluster_name  = var.cluster_name
   customer_name = var.customer_name
