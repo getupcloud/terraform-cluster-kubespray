@@ -36,6 +36,7 @@ locals {
   manifests_template_vars = merge(
     var.manifests_template_vars,
     {
+      cluster_provider : var.cluster_provider
       alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
