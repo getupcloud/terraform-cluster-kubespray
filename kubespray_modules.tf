@@ -2,13 +2,13 @@
 
 resource "local_file" "debug-modules" {
   count    = var.dump_debug ? 1 : 0
-  filename = ".debug-eks-modules.json"
+  filename = ".debug-kubespray-modules.json"
   content  = jsonencode(local.modules)
 }
 
 module "cert-manager" {
   count  = local.modules.cert-manager.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha2"
+  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha4"
 
   cluster_name  = var.cluster_name
   customer_name = var.customer_name
