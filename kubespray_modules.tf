@@ -20,7 +20,7 @@ module "cert-manager" {
 
 module "velero" {
   count  = local.modules.velero.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-velero?ref=v2.0.0-alpha3"
+  source = "github.com/getupcloud/terraform-module-velero?ref=v2.0.0-alpha4"
 
   cluster_name  = var.cluster_name
   customer_name = var.customer_name
