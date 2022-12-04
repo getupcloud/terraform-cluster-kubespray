@@ -236,12 +236,6 @@ variable "ssh_bastion_private_key" {
   default     = ""
 }
 
-variable "custom_provisioner" {
-  description = "Path for custom provisioner script"
-  type        = string
-  default     = null
-}
-
 variable "install_packages" {
   description = "Extra packages to install on nodes"
   type        = list(string)
