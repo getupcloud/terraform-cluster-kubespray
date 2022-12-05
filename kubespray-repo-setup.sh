@@ -46,7 +46,7 @@ function command_read()
 {
   {
     git_hash=$(git log -1 --pretty=format:%h)
-    git_ref="$(git rev-parse --symbolic-full-name HEAD)"
+    git_ref="$(git rev-parse --symbolic-full-name $KUBESPRAY_GIT_REF)"
     requirements_txt_id=$(md5sum $KUBESPRAY_REPO_DIR/requirements.txt | awk '{print $1}')
   } >&2
 
