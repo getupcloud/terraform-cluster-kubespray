@@ -29,6 +29,7 @@ module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=v2.0"
   count  = var.deploy_components ? 1 : 0
 
+  cronitor_enabled   = var.cronitor_enabled
   api_endpoint       = var.api_endpoint
   cluster_name       = var.cluster_name
   customer_name      = var.customer_name
