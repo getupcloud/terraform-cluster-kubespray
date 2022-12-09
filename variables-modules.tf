@@ -9,6 +9,5 @@ variable "modules_defaults" {
 }
 
 locals {
-  modules          = merge(var.modules_defaults, var.modules, {})
   register_modules = {}
 }
