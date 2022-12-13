@@ -50,7 +50,7 @@ module "opsgenie" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.4"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.4.1"
 
   nodes                   = local.all_nodes
   ssh_user                = var.ssh_user
