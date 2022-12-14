@@ -5,6 +5,12 @@ if [ -z "$KUBESPRAY_REPO_DIR" ]; then
   exit 1
 fi
 
+if which pip3.8 2>/dev/null; then
+    PIP=pip3.8
+else
+    PIP=pip3
+fi
+
 export GIT_DIR=$KUBESPRAY_REPO_DIR/.git
 
 set -eu
@@ -32,7 +38,8 @@ function command_create()
   ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
 
   git checkout "$KUBESPRAY_GIT_REF" >&2
-  pip3 install --user -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
+
+  $PIP install --user -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
   command_read
 }
 
