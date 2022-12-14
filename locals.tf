@@ -34,6 +34,11 @@ locals {
   }
 
   manifests_template_vars = merge(
+    {
+      cluster : {
+        region : var.region
+      }
+    },
     var.manifests_template_vars,
     {
       cluster_provider : var.cluster_provider
