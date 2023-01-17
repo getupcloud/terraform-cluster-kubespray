@@ -48,22 +48,28 @@ variable "master_nodes" {
   type        = list(any)
   default = [
     {
-      address : "1.1.1.1",
+      address : "10.0.0.1",
       hostname : "master-0",
       ssh_private_key : "~/.ssh/id_rsa",
 
       disks : {
-        etcd : {
+        containers : {
           device : "/dev/sdb",
-          mountpoint : "/var/lib/containers"
+          mountpoint : "/var/lib/containers",
+          filesystem : "ext4",
+          format : false
         },
         kubelet : {
           device : "/dev/sdc",
           mountpoint : "/var/lib/kubelet"
+          filesystem : "ext4",
+          format : false
         }
-        containers : {
+        etcd : {
           device : "/dev/sdd",
-          mountpoint : "/var/lib/etcd"
+          mountpoint : "/var/lib/etcd",
+          filesystem : "ext4",
+          format : false
         }
       }
     }
@@ -74,32 +80,40 @@ variable "infra_nodes" {
   type        = list(any)
   default = [
     {
-      address : "2.2.2.2",
+      address : "10.0.0.10",
       hostname : "infra-0"
 
       disks : {
         kubelet : {
           device : "/dev/sdb",
           mountpoint : "/var/lib/kubelet",
+          filesystem : "ext4",
+          format : false
         }
         containers : {
           device : "/dev/sdc",
           mountpoint : "/var/lib/containers",
+          filesystem : "ext4",
+          format : false
         }
       }
     },
     {
-      address : "3.3.3.3",
-      hostname : "app-0",
+      address : "10.0.0.11",
+      hostname : "infra-1",
 
       disks : {
         kubelet : {
           device : "/dev/sdb",
           mountpoint : "/var/lib/kubelet",
+          filesystem : "ext4",
+          format : false
         }
         containers : {
           device : "/dev/sdc",
           mountpoint : "/var/lib/containers",
+          filesystem : "ext4",
+          format : false
         }
       }
     }
@@ -111,32 +125,40 @@ variable "app_nodes" {
   type        = list(any)
   default = [
     {
-      address : "2.2.2.2",
-      hostname : "infra-0"
+      address : "10.0.0.20",
+      hostname : "app-0"
 
       disks : {
         kubelet : {
           device : "/dev/sdb",
           mountpoint : "/var/lib/kubelet",
+          filesystem : "ext4",
+          format : false
         }
         containers : {
           device : "/dev/sdc",
           mountpoint : "/var/lib/containers",
+          filesystem : "ext4",
+          format : false
         }
       }
     },
     {
-      address : "3.3.3.3",
-      hostname : "app-0",
+      address : "10.0.0.21",
+      hostname : "app-1",
 
       disks : {
         kubelet : {
           device : "/dev/sdb",
           mountpoint : "/var/lib/kubelet",
+          filesystem : "ext4",
+          format : false
         }
         containers : {
           device : "/dev/sdc",
           mountpoint : "/var/lib/containers",
+          filesystem : "ext4",
+          format : false
         }
       }
     }
