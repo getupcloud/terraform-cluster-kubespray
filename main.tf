@@ -27,7 +27,6 @@ module "flux" {
 
 module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=v2.0"
-  count  = var.deploy_components ? 1 : 0
 
   cronitor_enabled   = var.cronitor_enabled
   api_endpoint       = var.api_endpoint
@@ -50,7 +49,7 @@ module "opsgenie" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.4.1"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.4.2"
 
   nodes                   = local.all_nodes
   ssh_user                = var.ssh_user
