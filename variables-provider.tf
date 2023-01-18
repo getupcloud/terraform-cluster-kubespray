@@ -170,7 +170,10 @@ variable "app_nodes" {
 variable "default_master_node_labels" {
   description = "Default labels for master nodes"
   type        = map(any)
-  default     = {}
+  default = {
+    role : "master"
+    "node-role.kubernetes.io/master" : ""
+  }
 }
 
 variable "default_infra_node_labels" {
@@ -196,7 +199,10 @@ variable "default_app_node_labels" {
 variable "default_master_node_taints" {
   description = "Default taints for master nodes"
   type        = list(string)
-  default     = []
+  default = [
+    "node-role.kubernetes.io/control-plane:NoSchedule",
+    "node-role.kubernetes.io/master:NoSchedule"
+  ]
 }
 
 variable "default_infra_node_taints" {
