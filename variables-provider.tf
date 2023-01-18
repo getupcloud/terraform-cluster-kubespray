@@ -227,7 +227,7 @@ variable "ssh_password" {
 variable "ssh_private_key" {
   description = "Path for SSH private key"
   type        = string
-  default     = ""
+  default     = "/cluster/identity"
 }
 
 variable "ssh_bastion_host" {
