@@ -3,9 +3,19 @@
 
 variable "modules_defaults" {
   description = "Configure modules to install (defaults)"
-  type        = object({})
+  type = object({
+    metallb = object({
+      enabled   = bool
+      addresses = list(string)
+    })
+  })
 
-  default = {}
+  default = {
+    metallb = {
+      enabled   = false
+      addresses = []
+    }
+  }
 }
 
 locals {

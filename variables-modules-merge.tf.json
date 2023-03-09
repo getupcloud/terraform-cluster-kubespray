@@ -4,6 +4,11 @@
     "$ ./make-modules variables-modules.tf"
   ],
   "locals": {
-    "modules": {}
+    "modules": {
+      "metallb": {
+        "enabled": "${try(var.modules.metallb.enabled, var.modules_defaults.metallb.enabled)}",
+        "addresses": "${try(var.modules.metallb.addresses, var.modules_defaults.metallb.addresses)}"
+      }
+    }
   }
 }
