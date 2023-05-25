@@ -37,6 +37,7 @@ function command_create()
 
   ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
 
+  git reset --hard
   git checkout "$KUBESPRAY_GIT_REF" >&2
 
   $PIP install --user -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
