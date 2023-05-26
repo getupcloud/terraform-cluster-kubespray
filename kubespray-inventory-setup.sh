@@ -45,7 +45,7 @@ function create_inventory_file()
 
 function copy_group_vars()
 {
-  if [ -d "$GROUP_VARS_DIR" ]; then
+  if [ -d "$GROUP_VARS_DIR/all" ]; then
     return
   fi
 
