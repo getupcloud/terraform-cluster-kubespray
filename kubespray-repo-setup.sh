@@ -5,7 +5,9 @@ if [ -z "$KUBESPRAY_REPO_DIR" ]; then
   exit 1
 fi
 
-if which pip3.8 2>/dev/null; then
+if which pip3.9 2>/dev/null; then
+    PIP=pip3.9
+elif which pip3.8 2>/dev/null; then
     PIP=pip3.8
 else
     PIP=pip3
