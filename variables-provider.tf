@@ -10,7 +10,10 @@ variable "api_endpoint" {
 variable "kubernetes_version" {
   description = "Kubernetes rersion"
   type        = string
-  default     = "1.24"
+  validation {
+    condition     = can(regex("^v[0-9]\\.[0-9]+\\.[0-9]+", var.kubernetes_version))
+    error_message = "Kubernetes version must match format `v{MAJOR}.{MINOR}.{PATCH}`"
+  }
 }
 
 variable "region" {

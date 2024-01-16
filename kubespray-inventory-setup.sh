@@ -31,10 +31,10 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
-  printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
+  printenv KUBE_VERSION MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
   | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
   | jq -s add \
-  | jq '{all:{hosts:.}}' \
+  | jq '{all:{vars:{kube_version:"'$KUBE_VERSION'"}},{hosts:.}}' \
   | yq e -P - \
   > /tmp/hosts-patch.yaml
 
