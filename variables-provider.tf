@@ -12,7 +12,7 @@ variable "kubernetes_version" {
   type        = string
   validation {
     condition     = can(regex("^v[0-9]\\.[0-9]+\\.[0-9]+", var.kubernetes_version))
-    error_message = "Kubernetes version must match format `v{MAJOR}.{MINOR}.{PATCH}`"
+    error_message = "Kubernetes version must match format `v{MAJOR}.{MINOR}.{PATCH}`."
   }
 }
 
