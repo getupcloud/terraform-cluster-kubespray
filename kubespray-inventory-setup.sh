@@ -6,6 +6,7 @@ fi
 
 export INVENTORY_DIR="$(dirname $INVENTORY_FILE)"
 export GROUP_VARS_DIR="$INVENTORY_DIR/group_vars"
+export KUBE_VERSION="$(base64 -d <<<$KUBE_VERSION)"
 export MASTER_NODES_JSON="$(base64 -d <<<$MASTER_NODES)"
 export INFRA_NODES_JSON="$(base64 -d <<<$INFRA_NODES)"
 export APP_NODES_JSON="$(base64 -d <<<$APP_NODES)"
@@ -31,10 +32,10 @@ function create_inventory_file()
   $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
 
   # add labels and taints
-  printenv KUBE_VERSION MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
+  printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
   | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
   | jq -s add \
-  | jq '{all:{vars:{kube_version:"'$KUBE_VERSION'"}},{hosts:.}}' \
+  | jq '{all:{hosts:.,vars:{kube_version:"'$KUBE_VERSION'"}}}' \
   | yq e -P - \
   > /tmp/hosts-patch.yaml
 
@@ -45,17 +46,23 @@ function create_inventory_file()
 
 function copy_group_vars()
 {
-  if [ -f "$GROUP_VARS_DIR/all/all.yml" ]; then
+  if [ -d "$GROUP_VARS_DIR/all" ]; then
     return
   fi
 
   cp -var $KUBESPRAY_DIR/inventory/sample/group_vars $GROUP_VARS_DIR
 }
 
+function update_kube_version()
+{
+  sed -i.bkp -e "s/^kube_version:.*/# kube_version: $KUBE_VERSION # updated by terraform.tfvars" $GROUP_VARS_DIR/k8s_cluster/k8s-cluster.yml
+}
+
 function command_create()
 {
   create_inventory_file
   copy_group_vars
+  update_kube_version
 }
 
 function command_update()

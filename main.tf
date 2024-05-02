@@ -84,7 +84,7 @@ resource "shell_script" "kubespray-inventory" {
     MASTER_NODES       = base64encode(jsonencode(local.master_nodes))
     INFRA_NODES        = base64encode(jsonencode(local.infra_nodes))
     APP_NODES          = base64encode(jsonencode(local.app_nodes))
-    KUBE_VERSION       = base64encode(jsonencode(var.kubernetes_version))
+    KUBE_VERSION       = base64encode(var.kubernetes_version)
   }
 }
 
