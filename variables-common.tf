@@ -1,28 +1,6 @@
 ## Common variables to all providers
 ## Copy to cluster repo
 
-variable "cronitor_enabled" {
-  description = "Creates and enables Cronitor monitor."
-  type        = bool
-  default     = false
-}
-
-variable "cronitor_notification_lists" {
-  description = "Cronitor Notification lists by SLA"
-  type        = any
-  default = {
-    high : ["default", "opsgenie-high-sla"]
-    low : ["default", "opsgenie-low-sla"]
-    none : []
-  }
-}
-
-variable "cronitor_pagerduty_key" {
-  description = "Cronitor PagerDuty key"
-  type        = string
-  default     = ""
-}
-
 variable "cluster_name" {
   description = "Cluster name"
   type        = string
@@ -47,6 +25,7 @@ variable "customer_name" {
 variable "cluster_provider" {
   description = "Cluster provider name"
   type        = string
+  default     = "none"
 
   validation {
     condition     = contains(["aws", "azure", "do", "gcp", "none", "oci"], var.cluster_provider)
@@ -63,7 +42,13 @@ variable "flux_git_repo" {
 variable "flux_version" {
   description = "Flux version to install"
   type        = string
-  default     = "v0.35.0"
+  default     = "v0.41.2"
+}
+
+variable "flux_install_file" {
+  description = "Use this file to install flux instead default files. Using this options will ignore var.flux_version"
+  type        = string
+  default     = ""
 }
 
 variable "flux_wait" {
@@ -101,22 +86,22 @@ variable "manifests_template_vars" {
   }
 }
 
+variable "cronitor_id" {
+ description = "Cronitor Monitor ID (6 chars key)."
+ type        = string
+ default     = ""
+}
+
+variable "opsgenie_integration_api_key" {
+  description = "Opsgenie integration API key to send alerts."
+  type        = string
+  default     = ""
+}
+
 variable "modules" {
   description = "Configure modules to install"
   type        = any
   default     = {}
-}
-
-variable "opsgenie_enabled" {
-  description = "Creates and enables Opsgenie integration."
-  type        = bool
-  default     = false
-}
-
-variable "opsgenie_team_name" {
-  description = "Opsgenie Owner team name of the integration."
-  type        = string
-  default     = "Operations"
 }
 
 variable "post_create" {

@@ -25,29 +25,6 @@ module "flux" {
   debug                   = var.dump_debug
 }
 
-module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v2.0"
-
-  cronitor_enabled   = var.cronitor_enabled
-  api_endpoint       = var.api_endpoint
-  cluster_name       = var.cluster_name
-  customer_name      = var.customer_name
-  cluster_sla        = var.cluster_sla
-  suffix             = "kspray"
-  tags               = [var.kubespray_git_ref]
-  pagerduty_key      = var.cronitor_pagerduty_key
-  notification_lists = var.cronitor_notification_lists
-}
-
-module "opsgenie" {
-  source = "github.com/getupcloud/terraform-module-opsgenie?ref=v1.2"
-
-  opsgenie_enabled = var.opsgenie_enabled
-  customer_name    = var.customer_name
-  cluster_name     = var.cluster_name
-  owner_team_name  = var.opsgenie_team_name
-}
-
 module "provisioner" {
   source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.5.0"
 
