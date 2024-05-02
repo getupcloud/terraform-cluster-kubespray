@@ -55,7 +55,7 @@ function copy_group_vars()
 
 function update_kube_version()
 {
-  sed -i.bkp -e "s/^kube_version:.*/# kube_version: $KUBE_VERSION # updated by terraform.tfvars" $GROUP_VARS_DIR/k8s_cluster/k8s-cluster.yml
+  sed -i.bkp -e "s/^kube_version:.*/# kube_version: $KUBE_VERSION # updated by terraform.tfvars/" $GROUP_VARS_DIR/k8s_cluster/k8s-cluster.yml
 }
 
 function command_create()
