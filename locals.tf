@@ -44,7 +44,7 @@ locals {
       cluster_provider : var.cluster_provider
       alertmanager_cronitor_id : var.cronitor_id
       alertmanager_opsgenie_integration_api_key : var.opsgenie_integration_api_key
-      ecret : random_string.secret.result
+      secret : random_string.secret.result
       suffix : random_string.suffix.result
       modules : local.modules_result
     },
