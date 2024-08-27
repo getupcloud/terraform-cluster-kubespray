@@ -14,7 +14,7 @@ module "teleport-agent" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v2.3.0"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.5.1"
   count  = var.deploy_components ? 1 : 0
 
   git_repo                = var.flux_git_repo
