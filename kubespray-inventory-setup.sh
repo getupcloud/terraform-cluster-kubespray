@@ -46,11 +46,7 @@ function create_inventory_file()
 
 function copy_group_vars()
 {
-  if [ -d "$GROUP_VARS_DIR/all" ]; then
-    return
-  fi
-
-  cp -var $KUBESPRAY_DIR/inventory/sample/group_vars $GROUP_VARS_DIR
+  cp -avnr $KUBESPRAY_DIR/inventory/sample/group_vars/* $GROUP_VARS_DIR
 }
 
 function update_kube_version()
