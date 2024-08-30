@@ -42,7 +42,7 @@ function command_create()
   git reset --hard
   git checkout "$KUBESPRAY_GIT_REF" >&2
 
-  $PIP install --user -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
+  $PIP install -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
   command_read
 }
 
