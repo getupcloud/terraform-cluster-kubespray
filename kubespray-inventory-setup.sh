@@ -33,7 +33,7 @@ function create_inventory_file()
 
   # add labels and taints
   printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
-  | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .taints, node_labels: .labels}}' \
+  | jq -s '.[] | .[] | {(.hostname // .address):{node_taints: .node_taints, node_labels: .node_labels}}' \
   | jq -s add \
   | jq '{all:{hosts:.,vars:{kube_version:"'$KUBE_VERSION'"}}}' \
   | yq e -P - \
