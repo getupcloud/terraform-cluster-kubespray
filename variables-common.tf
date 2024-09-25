@@ -57,6 +57,18 @@ variable "flux_wait" {
   default     = true
 }
 
+variable "flux_identity_file" {
+  description = "SSH deploy private key"
+  type        = string
+  default     = "identity"
+}
+
+variable "flux_identity_pub_file" {
+  description = "SSH deploy public key"
+  type        = string
+  default     = "identity.pub"
+}
+
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"

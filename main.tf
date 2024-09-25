@@ -22,6 +22,8 @@ module "flux" {
   wait                    = var.flux_wait
   flux_version            = var.flux_version
   manifests_template_vars = local.manifests_template_vars
+  identity_file           = var.flux_identity_file
+  identity_pub_file       = var.flux_identity_pub_file
   debug                   = var.dump_debug
 }
 
