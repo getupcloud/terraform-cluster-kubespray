@@ -28,7 +28,7 @@ module "flux" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.5.4"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.5.5"
 
   nodes                   = local.all_nodes
   ssh_user                = var.ssh_user
