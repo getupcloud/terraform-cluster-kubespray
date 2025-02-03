@@ -34,12 +34,19 @@ function command_create()
   validate_parameters
 
   if [ -e "$KUBESPRAY_DIR" ]; then
-    rm -rf "$KUBESPRAY_DIR"
+    command_read
+    return
   fi
 
   ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
 
+  if [ "$(git rev-parse HEAD)" == "$(git rev-parse "$KUBESPRAY_GIT_REF")" ]; then
+    command_read
+    return
+  fi
+
   git reset --hard
+
   git checkout "$KUBESPRAY_GIT_REF" >&2
 
   $PIP install -r $KUBESPRAY_REPO_DIR/requirements.txt >&2
