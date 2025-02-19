@@ -28,8 +28,11 @@ function create_inventory_file()
     $(jq -r '.[]|"\(.hostname),\(.address // empty)"' <<<${APP_NODES_JSON})
   )
 
-  chmod +x $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py
-  $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
+  if [ -e $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ]; then
+    python3 $KUBESPRAY_DIR/contrib/inventory_builder/inventory.py ${nodes[*]} >&2
+  elif which inventory-builder.py 7>/dev/null; then
+    inventory-builder.py ${nodes[*]} >&2
+  fi
 
   # add labels and taints
   printenv MASTER_NODES_JSON INFRA_NODES_JSON APP_NODES_JSON \
@@ -49,16 +52,17 @@ function copy_group_vars()
   cp -avnr $KUBESPRAY_DIR/inventory/sample/group_vars/* $GROUP_VARS_DIR
 }
 
-function update_kube_version()
+function update_group_vars()
 {
   sed -i.bkp -e "s/^kube_version:.*/# kube_version: $KUBE_VERSION # Commented by terraform.tfvars. It now comes from hosts.yaml/" $GROUP_VARS_DIR/k8s_cluster/k8s-cluster.yml
+  sed -i.bkp -e "s|^kube_vip_arp_enabled:\(.*\)|# kube_vip_arp_enabled:\1 # Commented by terraform.tfvars. It now comes from group_vars/all/getup.yml|" $GROUP_VARS_DIR/k8s_cluster/addons.yml
 }
 
 function command_create()
 {
   create_inventory_file
   copy_group_vars
-  update_kube_version
+  update_group_vars
 }
 
 function command_update()

@@ -40,10 +40,10 @@ function command_create()
 
   ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
 
-  if [ "$(git rev-parse HEAD)" == "$(git rev-parse "$KUBESPRAY_GIT_REF")" ]; then
-    command_read
-    return
-  fi
+#  if [ "$(git rev-parse HEAD)" == "$(git rev-parse "$KUBESPRAY_GIT_REF")" ]; then
+#    command_read
+#    return
+#  fi
 
   git reset --hard
 
@@ -59,6 +59,7 @@ function command_update()
   command_create
 }
 
+# TODO
 function command_read()
 {
   {
