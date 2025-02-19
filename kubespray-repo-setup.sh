@@ -46,7 +46,7 @@ function command_create()
 #  fi
 
   git reset --hard
-
+  git switch -f master
   git checkout "$KUBESPRAY_GIT_REF" >&2
 
   $PIP install -r $KUBESPRAY_REPO_DIR/requirements.txt --root $CLUSTER_DIR/.pyenv >&2
