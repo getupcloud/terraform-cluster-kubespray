@@ -5,7 +5,13 @@ if [ -z "$KUBESPRAY_REPO_DIR" ]; then
   exit 1
 fi
 
-if which pip3.9 2>/dev/null; then
+if which pip3.12 2>/dev/null; then
+    PIP=pip3.12
+elif which pip3.11 2>/dev/null; then
+    PIP=pip3.11
+elif which pip3.10 2>/dev/null; then
+    PIP=pip3.10
+elif which pip3.9 2>/dev/null; then
     PIP=pip3.9
 elif which pip3.8 2>/dev/null; then
     PIP=pip3.8
@@ -33,10 +39,10 @@ function command_create()
 {
   validate_parameters
 
-  if [ -e "$KUBESPRAY_DIR" ]; then
-    command_read
-    return
-  fi
+  #if [ -e "$KUBESPRAY_DIR" ]; then
+  #  command_read
+  #  return
+  #fi
 
   ln -fs $KUBESPRAY_REPO_DIR $KUBESPRAY_DIR
 
