@@ -37,7 +37,7 @@ function validate_parameters()
 
 function command_create()
 {
-  validate_parameters
+  #validate_parameters
 
   #if [ -e "$KUBESPRAY_DIR" ]; then
   #  command_read
@@ -61,7 +61,6 @@ function command_create()
 
 function command_update()
 {
-  validate_parameters
   command_create
 }
 
