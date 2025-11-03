@@ -14,7 +14,7 @@ module "teleport-agent" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v2.8.3"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.8.4"
   count  = var.terraform_mode == "terraform-install" ? 1 : 0
 
   git_repo                = var.flux_git_repo
@@ -28,7 +28,7 @@ module "flux" {
 }
 
 module "provisioner" {
-  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.5.5"
+  source = "github.com/getupcloud/terraform-module-provisioner?ref=v1.5.6"
 
   nodes                   = local.all_nodes
   ssh_user                = var.ssh_user
@@ -38,6 +38,7 @@ module "provisioner" {
   ssh_bastion_user        = var.ssh_bastion_user
   ssh_bastion_password    = var.ssh_bastion_password
   ssh_bastion_private_key = var.ssh_bastion_private_key
+  sudo_password           = var.sudo_password
   install_packages        = concat(var.install_packages, var.install_packages_default)
   uninstall_packages      = concat(var.uninstall_packages, var.uninstall_packages_default)
   systemctl_enable        = var.systemctl_enable

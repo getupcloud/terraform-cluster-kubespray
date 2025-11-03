@@ -5,6 +5,7 @@ RELEASE        := v$(VERSION)
 SEMVER_REGEX   := ^([0-9]+)\.([0-9]+)\.([0-9]+)(-([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(\+[0-9A-Za-z-]+)?$
 IMPORT_SOURCES := https://github.com/getupcloud/managed-cluster/raw/main/templates/variables-common.tf
 
+SHELL := /bin/bash
 .ONESHELL:
 
 import:
