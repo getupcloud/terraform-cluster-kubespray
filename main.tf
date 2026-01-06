@@ -1,5 +1,6 @@
 module "internet" {
-  source = "github.com/getupcloud/terraform-module-internet?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-internet?ref=v1.1"
+
 }
 
 module "teleport-agent" {
