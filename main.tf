@@ -52,10 +52,10 @@ resource "shell_script" "kubespray-repo" {
   }
 
   lifecycle_commands {
-    create = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-repo-setup.sh create"
-    update = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-repo-setup.sh update"
-    read   = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-repo-setup.sh read"
-    delete = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-repo-setup.sh delete"
+    create = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-repo-setup.sh create"
+    update = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-repo-setup.sh update"
+    read   = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-repo-setup.sh read"
+    delete = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-repo-setup.sh delete"
   }
 
   environment = {
@@ -73,10 +73,10 @@ resource "shell_script" "kubespray-inventory" {
   depends_on = [shell_script.kubespray-repo]
 
   lifecycle_commands {
-    create = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-inventory-setup.sh create"
-    update = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-inventory-setup.sh update"
-    read   = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-inventory-setup.sh read"
-    delete = "${trimprefix(path.module,"${abspath(path.root)}/")}/kubespray-inventory-setup.sh delete"
+    create = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-inventory-setup.sh create"
+    update = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-inventory-setup.sh update"
+    read   = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-inventory-setup.sh read"
+    delete = "${trimprefix(path.module, "${abspath(path.root)}/")}/kubespray-inventory-setup.sh delete"
   }
 
   environment = {
